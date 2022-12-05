@@ -1,0 +1,33 @@
+{
+    "evsc7dgd8avrt7ib62pi49": {
+        "id": "evsc7dgd8avrt7ib62pi49",
+        "attacker": "729567972070391848",
+        "defender": "1025832055696785470",
+        "damage": [
+            0,
+            0
+        ],
+        "turns": 0
+    },
+    "a05vjxjz77884yjtl0txww": {
+        "id": "a05vjxjz77884yjtl0txww",
+        "attacker": "729567972070391848",
+        "defender": "1025832055696785470",
+        "damage": [
+            0,
+            0
+        ],
+        "turns": 0
+    },
+    "3zs0ax13cakslficfaon5": {
+        "id": "3zs0ax13cakslficfaon5",
+        "attacker": "729567972070391848",
+        "defender": "1025832055696785470",
+        "damage": [
+            0,
+            0
+        ],
+        "turns": 21,
+        "attackerTurn": true
+    }
+}
