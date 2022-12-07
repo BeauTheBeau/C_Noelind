@@ -2,50 +2,25 @@
     "729567972070391848": {
         "id": "729567972070391848",
         "username": "Beau the Cta God",
-        "messages": 0,
-        "xp": 0,
+        "messages": 11,
+        "xp": 153,
         "characters": {
-            "beau": {
-                "name": "beau",
+            "h": {
+                "name": "h",
                 "hp": 100,
                 "max_hp": 100,
-                "created": 1669928638218
+                "created": 1670456422373
             }
         },
         "inventory": {},
-        "inCombat": true,
-        "combat": "3zs0ax13cakslficfaon5"
+        "active_character": "h2"
     },
-    "377491995960016897": {
-        "id": "377491995960016897",
-        "username": "Beau the Llama God",
-        "messages": 0,
-        "xp": 0,
-        "characters": {
-            "beau": {
-                "name": "beau",
-                "hp": 100,
-                "max_hp": 100,
-                "created": 1669928638218
-            }
-        },
-        "inventory": {},
-        "active_character": "Beau"
-    },
-    "1025832055696785470": {
-        "id": "1025832055696785470",
-        "messages": 0,
-        "xp": 0,
-        "characters": {
-            "beau": {
-                "name": "beau",
-                "hp": 100,
-                "max_hp": 100,
-                "created": 1669928638218
-            }
-        },
-        "inventory": {},
-        "inCombat": true,
-        "combat": "3zs0ax13cakslficfaon5"
+    "584152759511547905": {
+        "id": "584152759511547905",
+        "username": "FeatherSol223",
+        "messages": 2,
+        "xp": 15,
+        "characters": {},
+        "inventory": {}
     }
 }

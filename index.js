@@ -23,6 +23,27 @@ for (const file of commandFiles) {
     client.commands.set(command.data.name, command);
 }
 
+function checkUserExists(user) {
+    if (!users[user.id]) {
+        users[user.id] = {
+            id: user.id,
+            username: user.username,
+            messages: 0,
+            xp: 0,
+            characters: {},
+            inventory: {}
+        };
+
+        // Save the database
+        fs.writeFile(path.join(__dirname, 'data/users.json'), JSON.stringify(users, null, 4), err => {
+            if (err) throw err;
+        });
+    }
+    else {
+        return
+    }
+}
+
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag} (${client.user.id})`);
 });
@@ -34,7 +55,8 @@ client.on('interactionCreate', async interaction => {
     if (!command) return;
     try {
         await command.execute(interaction);
-    } catch (error) {
+    }
+    catch (error) {
         if (devMode) {
             interaction.reply({content: `There was an error: \`\`\`${error}\`\`\``, ephemeral: false});
             console.error(error);
@@ -43,6 +65,13 @@ client.on('interactionCreate', async interaction => {
             console.error(error);
         }
     }
+
+
+    let time = new Date();
+    // into HH:MM:SS | DD/MM/YYYY format
+    let timeString = time.toLocaleTimeString('en-GB', {hour12: false}) + ' @ ' + time.toLocaleDateString('en-GB');
+    console.log(`${timeString} | Command ${interaction.commandName} used by ${interaction.user.username} (${interaction.user.id})`);
+
 });
 client.on('messageCreate', async message => {
     blacklist = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/blacklisted.json'), 'utf8'));
@@ -79,25 +108,6 @@ client.on('messageCreate', async message => {
     }
 
 });
-
-function checkUserExists(user) {
-    if (!users[user.id]) {
-        users[user.id] = {
-            id: user.id,
-            username: user.username,
-            messages: 0,
-            xp: 0,
-            characters: {},
-            inventory: {}
-        };
-
-        // Save the database
-        fs.writeFile(path.join(__dirname, 'data/users.json'), JSON.stringify(users, null, 4), err => {
-            if (err) throw err;
-        });
-    }
-}
-
 client.on(Events.InteractionCreate, interaction => {
     if (!interaction.isButton()) return;
 
@@ -170,5 +180,7 @@ client.on(Events.InteractionCreate, interaction => {
         });
     }
 });
+
+
 
 client.login(token)

@@ -27,7 +27,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setTitle('Active Character Set')
                 .setColor(0x00FF00)
-                .setDescription(`Your active character has been set to ${name}.`)
+                .setDescription(`Your active character has been set to ${users[user.id].active_character}.`)
                 .setTimestamp()
 
             interaction.reply({embeds: [embed]});
