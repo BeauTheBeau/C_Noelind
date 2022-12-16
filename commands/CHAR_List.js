@@ -1,5 +1,5 @@
 const {SlashCommandBuilder} = require('discord.js');
-const {EmbedBuilder} = require('discord.js');
+const {EmbedBuilder, ActionRowBuilder} = require('discord.js');
 
 const fs = require('node:fs');
 const path = require('node:path');
