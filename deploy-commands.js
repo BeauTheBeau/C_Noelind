@@ -3,16 +3,54 @@ const {REST} = require('@discordjs/rest');
 const {id, token} = require('./data/bot-data.json');
 const {Routes} = require('discord-api-types/v9');
 
+let rest = new REST({version: '9'}).setToken(token);
+rest.get(Routes.applicationCommands(id))
+    .then(data => {
+        const promises = [];
+        for (const command of data) {
+            const deleteUrl = `${Routes.applicationCommands(id)}/${command.id}`;
+            promises.push(rest.delete(deleteUrl));
+        }
+        return Promise.all(promises);
+    });
+
 const commands = [
+    // TODO: Add help command DO
+    new SlashCommandBuilder()
+        .setName(`help`)
+        .setDescription(`Shows a list of commands.`),
+
+    // TODO: Add bug report command
+    new SlashCommandBuilder()
+        .setName(`report-bug`)
+        .setDescription(`Report a bug to the developer.`)
+        .addStringOption(option => option
+            .setName(`bug`)
+            .setDescription(`The bug you want to report.`)
+            .setRequired(true))
+        .addAttachmentOption(option => option
+            .setName(`attachment`)
+            .setDescription(`An optional image to demonstrate the bug.`)
+            .setRequired(false))
+        .addBooleanOption(option => option
+            .setName(`private`)
+            .setDescription(`If you choose to keep the bug private, you won't be contacted for more information.`)
+            .setRequired(false)),
+
 
     // XP COMMANDS -----------------------------------------------------------------
+    // TODO: add a way to check the xp of other users
+
     new SlashCommandBuilder() // done
         .setName('rank')
         .setDescription('Shows your rank in the server')
         .addMentionableOption(option => option
             .setName('user')
             .setDescription('The user to show the rank of')
-            .setRequired(false)), new SlashCommandBuilder() // done
+            .setRequired(false)),
+
+    // TODO: add a way to show the rank of a user
+    new SlashCommandBuilder() // done
         .setName('leaderboard')
         .setDescription('Shows the top 10 users in the server'), new SlashCommandBuilder() // done
         .setName('setxp')
@@ -27,6 +65,8 @@ const commands = [
             .setRequired(true)),
 
     // BLACKLISTED CHANNEL COMMANDS ------------------------------------------------
+    // TODO: add blacklist command
+
     new SlashCommandBuilder() // done
         .setName('blacklist')
         .setDescription('Blacklists a channel from XP gain')
@@ -44,6 +84,8 @@ const commands = [
         .setDescription('Shows the blacklisted channels'),
 
     // SHOP COMMANDS ---------------------------------------------------------------
+    // TODO: add shop command
+
     new SlashCommandBuilder() // done
         .setName('shop')
         .setDescription('Shows the shop'), new SlashCommandBuilder() // done
@@ -73,6 +115,7 @@ const commands = [
             .setRequired(true)),
 
     // CHARACTER COMMANDS ----------------------------------------------------------
+    // TODO: add character command
 
     new SlashCommandBuilder() // done
         .setName('create-character')
@@ -103,6 +146,8 @@ const commands = [
             .setRequired(true)),
 
     // COMBAT COMMANDS -------------------------------------------------------------
+    // TODO: add combat command
+
     new SlashCommandBuilder()
         .setName('attack')
         .setDescription('Start a fight with another user')
@@ -117,20 +162,10 @@ const commands = [
             .addChoices({name: 'Bite', value: 'bite'}, {name: 'Claw', value: 'claw'}, {
                 name: 'Tackle', value: 'tackle'
             }, {name: 'Surrender', value: 'surrender'})),
-
-    new SlashCommandBuilder()
-        .setName('fight')
-        .setDescription('Start a fight with another user')
-        .addMentionableOption(option => option
-            .setName('user')
-            .setDescription('The user to fight')
-            .setRequired(true)),
-
-
 ]
 
 
-const rest = new REST({version: '10'}).setToken(token);
+rest = new REST({version: '10'}).setToken(token);
 
 rest.put(Routes.applicationCommands(id), {body: commands},).then(() => console.log('Registered all successfully.')).catch(console.error);
 
@@ -149,3 +184,4 @@ rest.get(Routes.applicationCommands(id))
     });
 
  */
+

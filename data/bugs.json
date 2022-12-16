@@ -1,0 +1,52 @@
+{
+    "CASE 2473": {
+        "bug": "fsdjfndfhdfsu",
+        "attachment": null,
+        "isPrivate": false,
+        "reportedBy": {
+            "id": "729567972070391848",
+            "bot": false,
+            "system": false,
+            "flags": 4194304,
+            "username": "Beau the Cta God",
+            "discriminator": "0290",
+            "avatar": "3e1930765152bdbab41c8b61a5eb287d",
+            "createdTimestamp": 1594012959259,
+            "defaultAvatarURL": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "tag": "Beau the Cta God#0290",
+            "avatarURL": "https://cdn.discordapp.com/avatars/729567972070391848/3e1930765152bdbab41c8b61a5eb287d.webp",
+            "displayAvatarURL": "https://cdn.discordapp.com/avatars/729567972070391848/3e1930765152bdbab41c8b61a5eb287d.webp"
+        }
+    },
+    "CASE 0833": {
+        "bug": "dasdsad",
+        "attachment": {
+            "attachment": "https://cdn.discordapp.com/ephemeral-attachments/1053284298041610311/1053295106029006868/ezgif-2-9ee29aa1bf.mp4",
+            "name": "ezgif-2-9ee29aa1bf.mp4",
+            "id": "1053295106029006868",
+            "size": 138323,
+            "url": "https://cdn.discordapp.com/ephemeral-attachments/1053284298041610311/1053295106029006868/ezgif-2-9ee29aa1bf.mp4",
+            "proxyURL": "https://media.discordapp.net/ephemeral-attachments/1053284298041610311/1053295106029006868/ezgif-2-9ee29aa1bf.mp4",
+            "height": 480,
+            "width": 800,
+            "contentType": "video/mp4",
+            "description": null,
+            "ephemeral": true
+        },
+        "isPrivate": false,
+        "reportedBy": {
+            "id": "729567972070391848",
+            "bot": false,
+            "system": false,
+            "flags": 4194304,
+            "username": "Beau the Cta God",
+            "discriminator": "0290",
+            "avatar": "3e1930765152bdbab41c8b61a5eb287d",
+            "createdTimestamp": 1594012959259,
+            "defaultAvatarURL": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "tag": "Beau the Cta God#0290",
+            "avatarURL": "https://cdn.discordapp.com/avatars/729567972070391848/3e1930765152bdbab41c8b61a5eb287d.webp",
+            "displayAvatarURL": "https://cdn.discordapp.com/avatars/729567972070391848/3e1930765152bdbab41c8b61a5eb287d.webp"
+        }
+    }
+}
