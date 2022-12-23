@@ -21,13 +21,22 @@ module.exports = {
         if (users[user.id]) {
             if (users[user.id].characters[name]) {
 
+                // use DD/MM/YYYY format
+
                 let created = new Date(users[user.id].characters[name].created);
-                let createdString = `${created.getMonth() + 1}/${created.getDate()}/${created.getFullYear()}`;
+                let createdString = `${created.getDate()}/${created.getMonth() + 1}/${created.getFullYear()}`;
+
+
+
+                let lastAte =  `<t:${users[user.id].characters[name].lastAte}>`;
+                let lastAteTimeAgo = `<t:${users[user.id].characters[name].lastAte}:R>`;
+
 
                 const embed = new EmbedBuilder()
-                    .setTitle('Character Information')
+                    .setTitle(`${name}'s info`)
                     .setColor(0x00FF00)
-                    .setDescription(`\`\`\`   Name: ${name}\n     HP: ${users[user.id].characters[name].hp} / ${users[user.id].characters[name].max_hp}\nCreated: ${createdString}\n\`\`\``)
+                    .setDescription(`**Name: **${name}\n**HP: **${users[user.id].characters[name].hp} / ${users[user.id].characters[name].max_hp}\n**Created: **${createdString}\n**Last Ate: **${lastAte} (${lastAteTimeAgo})
+                    `)
                     .setTimestamp()
 
                 interaction.reply({embeds: [embed]});

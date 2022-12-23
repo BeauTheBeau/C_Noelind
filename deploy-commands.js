@@ -3,16 +3,16 @@ const {REST} = require('@discordjs/rest');
 const {id, token} = require('./data/bot-data.json');
 const {Routes} = require('discord-api-types/v9');
 
-let rest = new REST({version: '9'}).setToken(token);
-rest.get(Routes.applicationCommands(id))
-    .then(data => {
-        const promises = [];
-        for (const command of data) {
-            const deleteUrl = `${Routes.applicationCommands(id)}/${command.id}`;
-            promises.push(rest.delete(deleteUrl));
-        }
-        return Promise.all(promises);
-    });
+// let rest = new REST({version: '9'}).setToken(token);
+// rest.get(Routes.applicationCommands(id))
+//     .then(data => {
+//         const promises = [];
+//         for (const command of data) {
+//             const deleteUrl = `${Routes.applicationCommands(id)}/${command.id}`;
+//             promises.push(rest.delete(deleteUrl));
+//         }
+//         return Promise.all(promises);
+//     });
 
 const commands = [
     // TODO: Add help command DO
@@ -37,6 +37,38 @@ const commands = [
             .setDescription(`If you choose to keep the bug private, you won't be contacted for more information.`)
             .setRequired(false)),
 
+    new SlashCommandBuilder()
+        .setName(`bugs`)
+        .setDescription(`Shows a list of active bugs.`),
+
+    new SlashCommandBuilder()
+        .setName(`bug`)
+        .setDescription(`Shows information about a specific bug.`)
+        .addNumberOption(option => option
+            .setName(`bug`)
+            .setDescription(`Bug case number.`)
+            .setRequired(true)),
+
+    new SlashCommandBuilder()
+        .setName("eat")
+        .setDescription("Eat food to restore HP.")
+        .addStringOption(option => option
+            .setName("character")
+            .setDescription("The character that will be doing the eating.")
+            .setRequired(true)),
+
+    // HEAL COMMANDS
+    new SlashCommandBuilder()
+        .setName("heal")
+        .setDescription("Heal a character.")
+        .addMentionableOption(option => option
+            .setName("user")
+            .setDescription("The user whose character will be healed.")
+            .setRequired(true))
+        .addStringOption(option => option
+            .setName("character")
+            .setDescription("The character that will be healed.")
+            .setRequired(true)),
 
     // XP COMMANDS -----------------------------------------------------------------
     // TODO: add a way to check the xp of other users
@@ -149,7 +181,7 @@ const commands = [
     // TODO: add combat command
 
     new SlashCommandBuilder()
-        .setName('attack')
+        .setName('fight')
         .setDescription('Start a fight with another user')
         .addMentionableOption(option => option
             .setName('user')

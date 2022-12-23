@@ -5,24 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {ButtonStyle} = require("discord-api-types/v8");
 
-const reportChannel = '1053282850507595776';
-
-const row = new ActionRowBuilder()
-    .addComponents(
-        new ButtonBuilder()
-            .setCustomId('primary')
-            .setLabel('Mark DONE')
-            .setStyle(ButtonStyle.Primary),
-        new ButtonBuilder()
-            .setCustomId('secondary')
-            .setLabel('Mark IN PROGRESS')
-            .setStyle(ButtonStyle.Secondary),
-        new ButtonBuilder()
-            .setCustomId('danger')
-            .setLabel('Mark NOT A BUG')
-            .setStyle(ButtonStyle.Danger),
-    );
-
+const reportChannel = '1053320344775176272';
 
 
 
@@ -47,6 +30,8 @@ module.exports = {
         let bugs = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/bugs.json'), 'utf8'));
         let bugsJSON = JSON.stringify(bugs, null, 4);
 
+
+
         // iterate over bugsJSON and see how many bugs there are
         let totalBugs = 0;
         for (let bug in bugs) {
@@ -58,16 +43,31 @@ module.exports = {
         let attachment = interaction.options.getAttachment('attachment');
         let isPrivate = interaction.options.getBoolean('private');
 
+
+        let row = new ActionRowBuilder()
+            .addComponents(new ButtonBuilder()
+                .setCustomId(`done-${bugNumber}`)
+                .setLabel('Mark DONE')
+                .setStyle(ButtonStyle.Primary), new ButtonBuilder()
+                .setCustomId(`progress-${bugNumber}`)
+                .setLabel('Mark IN PROGRESS')
+                .setStyle(ButtonStyle.Secondary), new ButtonBuilder()
+                .setCustomId(`delete-${bugNumber}`)
+                .setLabel('Mark NOT A BUG')
+                .setStyle(ButtonStyle.Danger),);
+
         let embed;
+
 
         if (isPrivate) {
             embed = new EmbedBuilder()
                 .setTitle(`Bug #${bugNumber} Reported`)
                 .setColor(0x00FF00)
-                .setDescription(`Your bug has been reported. You will not be contacted for more information.`)
+                .setDescription(`Your bug has been reported. It was filed anonymously and you won't be contacted for 
+                further information. i love gdpr and follow it to the letter.`)
                 .setTimestamp()
 
-            interaction.reply({embeds: [embed], components: [row]});
+            interaction.reply({embeds: [embed]});
 
             embed = new EmbedBuilder()
                 .setTitle(`CASE #${bugNumber}`)
@@ -87,10 +87,10 @@ module.exports = {
             embed = new EmbedBuilder()
                 .setTitle(`Bug #${bugNumber} Reported`)
                 .setColor(0x00FF00)
-                .setDescription(`Your bug has been reported. You will be contacted for more information.`)
+                .setDescription(`Your bug has been reported. You might be contacted for more information.`)
                 .setTimestamp()
 
-            interaction.reply({embeds: [embed], components: [row]});
+            interaction.user.send({embeds: [embed]});
 
             embed = new EmbedBuilder()
                 .setTitle(`CASE #${bugNumber}`)
@@ -109,10 +109,10 @@ module.exports = {
             embed = new EmbedBuilder()
                 .setTitle(`Bug #${bugNumber} Reported`)
                 .setColor(0x00FF00)
-                .setDescription(`Your bug has been reported. You may be contacted for more information.`)
+                .setDescription(`Your bug has been reported, here's your copy of the report. You might be contacted for more information.`)
                 .setTimestamp()
 
-            interaction.user.send({embeds: [embed], components: [row]});
+            interaction.user.send({embeds: [embed]});
 
             embed = new EmbedBuilder()
                 .setTitle(`CASE #${bugNumber}`)
@@ -126,15 +126,12 @@ module.exports = {
                 embed.setDescription(`Bug reported by ${interaction.user}:\`\`\`\n${bug}\`\`\`\nNo image provided.`);
             }
 
-            interaction.user.send({embeds: [embed], components: [row]});
+            interaction.user.send({embeds: [embed]});
         }
 
         // save to json with key as bug number
         bugs[`CASE ${bugNumber}`] = {
-            bug: bug,
-            attachment: attachment,
-            isPrivate: isPrivate,
-            reportedBy: interaction.user
+            bug: bug, attachment: attachment, isPrivate: isPrivate, reportedBy: interaction.user, status: 'OPEN'
         };
 
         bugsJSON = JSON.stringify(bugs, null, 4);

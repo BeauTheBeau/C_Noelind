@@ -37,7 +37,14 @@ module.exports = {
         .addMentionableOption(option => option
             .setName('user')
             .setDescription('The user to fight')
-            .setRequired(true)),
+            .setRequired(true))
+        .addStringOption(option => option
+            .setName('action')
+            .setDescription('The action to perform')
+            .setRequired(true)
+            .addChoices({name: 'Bite', value: 'bite'}, {name: 'Claw', value: 'claw'}, {
+                name: 'Tackle', value: 'tackle'
+            }, {name: 'Surrender', value: 'surrender'})),
     async execute(interaction) {
 
         let user = interaction.user;
@@ -94,7 +101,7 @@ module.exports = {
             });
 
             return interaction.reply({
-                content: 'The target has not yet registed with the bot, tell them to do so with `/create-character`.',
+                content: 'The target has not yet registered with the bot, tell them to do so with `/create-character`.',
                 ephemeral: true
             });
         }
@@ -130,6 +137,10 @@ module.exports = {
                 ephemeral: true
             });
         }
+
+        console.log(target.id)
+        console.log(Object.keys(users[target.id].characters).length)
+
         if (Object.keys(users[target.id].characters).length === 0) {
             return interaction.reply({
                 content: 'The target has not yet created a character, tell them to do so with `/create-character`.',
@@ -158,23 +169,39 @@ module.exports = {
         }
 
         users[user.id].inCombat = true;
-        users[user.id].combat = combatID;
+        users[user.id].combat = combatID.toString();
         users[target.id].inCombat = true;
-        users[target.id].combat = combatID;
+        users[target.id].combat = combatID.toString();
+
+        console.table(users[target.id])
+
+        console.table(users)
 
         // Save the database
-        fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 4), err => {
-            if (err) throw err;
-        });
-
-        // Save the database
-        fs.writeFile(path.join(__dirname, '../data/combat.json'), JSON.stringify(combat, null, 4), err => {
+        fs.writeFileSync(path.join(__dirname, '../data/combat.json'), JSON.stringify(combat), err => {
             if (err) throw err;
         })
+
+
+        combat = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/combat.json'), 'utf8'));
 
         interaction.reply({
             content: `<@${user.id}> is fighting <@${target.id}>! It's turn #${combat[combatID]+1} and <@${user.id}> is up first!`,
             components: [row]
         });
+
+        // wait 4 seconds
+        await new Promise(r => setTimeout(r, 4000));
+
+        // Save the database
+        fs.writeFileSync(path.join(__dirname, '../data/users.json'), JSON.stringify(users), err => {
+            if (err) throw err;
+            else {
+                console.log("saved users");
+            }
+        });
+
+
+
     }
 }
